@@ -1,0 +1,28 @@
+{
+  "name": "browserify-coffeelint",
+  "version": "1.0.0",
+  "description": "Simple 'transform' to lint coffeescript files",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nolemmings/browserify-coffeelint"
+  },
+  "keywords": [
+    "browserify",
+    "watchify",
+    "coffeescript",
+    "coffeelint",
+    "transform"
+  ],
+  "author": "nolemmings",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nolemmings/browserify-coffeelint/issues"
+  },
+  "homepage": "https://github.com/nolemmings/browserify-coffeelint",
+  "dependencies": {
+    "coffeelint": "^1.7.1",
+    "coffeelint-stylish": "^0.1.1",
+    "through2": "^0.6.3"
+  }
+}
