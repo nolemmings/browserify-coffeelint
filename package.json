@@ -1,7 +1,7 @@
 {
   "name": "browserify-coffeelint",
   "version": "1.0.0",
-  "description": "Simple 'transform' to lint coffeescript files",
+  "description": "Simple browserify 'transform' to lint coffeescript files",
   "main": "index.js",
   "repository": {
     "type": "git",

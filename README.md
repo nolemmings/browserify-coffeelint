@@ -11,3 +11,7 @@ npm install browserify-coffeelint --save-dev
 
 ## Use
 Just use as normal transform. Transform options are passed through as coffeelint options.
+
+```shell
+browserify -t browserify-coffeelint -t coffeeify main.coffee -o bundle.js
+```
