@@ -1,6 +1,6 @@
 {
   "name": "browserify-coffeelint",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Simple browserify 'transform' to lint coffeescript files",
   "main": "index.js",
   "repository": {
@@ -23,6 +23,7 @@
   "dependencies": {
     "coffeelint": "^1.7.1",
     "coffeelint-stylish": "^0.1.1",
+    "lodash": "^3.9.3",
     "through2": "^0.6.3"
   }
 }
