@@ -17,7 +17,7 @@ browserify -t browserify-coffeelint -t coffeeify main.coffee -o bundle.js
 ```
 
 ## Config
-It automatically looks for `coffeelint.coffee` in the default places (since 1.1.0). To generate such a file, execute:
+It automatically looks for `coffeelint.json` in the default places (since 1.1.0). To generate such a file, execute:
 
 ```shell
 coffeelint --makeconfig > coffeelint.json
