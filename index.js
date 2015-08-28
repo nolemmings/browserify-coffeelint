@@ -30,7 +30,7 @@
             next(new Error("coffeelint has errors"));
           }
           if (options.doEmitWarnings && _.any(errorReport.paths, function(p) {
-            return pathHasWarning(p);
+            return errorReport.pathHasWarning(p);
           })) {
             next(new Error("coffeelint has warnings"));
           }

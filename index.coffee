@@ -20,7 +20,7 @@ module.exports = (file, overrideOptions = {}) ->
         if options.doEmitErrors and errorReport.hasError()
           next new Error ("coffeelint has errors")
 
-        if options.doEmitWarnings and _.any(errorReport.paths, (p) -> pathHasWarning p)
+        if options.doEmitWarnings and _.any(errorReport.paths, (p) -> errorReport.pathHasWarning(p))
           next new Error ("coffeelint has warnings")
 
     # Just pass it through
