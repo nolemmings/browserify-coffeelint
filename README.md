@@ -49,7 +49,7 @@ browserify            = require 'browserify'
 browserify_coffeelint = require 'browserify-coffeelint'
 coffeeify             = require 'coffeeify'
 
-options = 
+options =
   arrow_spacing:
     name:  'arrow_spacing'
     level: 'error'
@@ -61,3 +61,7 @@ browserify()
 .bundle()
 .pipe process.stdout
 ```
+
+## Options
+
+Thanks to @nmccready, it is also possible to fail on error or warning. Just pass the options `doEmitErrors` or `doEmitWarnings`.
