@@ -21,9 +21,9 @@
   },
   "homepage": "https://github.com/nolemmings/browserify-coffeelint",
   "dependencies": {
-    "coffeelint": "^1.7.1",
-    "coffeelint-stylish": "^0.1.1",
-    "lodash": "^3.9.3",
-    "through2": "^0.6.3"
+    "coffeelint": "1.11.1",
+    "coffeelint-stylish": "^0.1.2",
+    "lodash": "^3.10.1",
+    "through2": "^2.0.0"
   }
 }
