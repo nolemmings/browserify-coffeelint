@@ -29,7 +29,7 @@
           if (options.doEmitErrors && errorReport.hasError()) {
             next(new Error("coffeelint has errors"));
           }
-          if (options.doEmitWarnings && _.any(errorReport.paths, function(p) {
+          if (options.doEmitWarnings && _.any(errorReport.paths, function(o, p) {
             return errorReport.pathHasWarning(p);
           })) {
             next(new Error("coffeelint has warnings"));
