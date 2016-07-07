@@ -10,19 +10,26 @@ transformOptions =
 module.exports = transformTools.makeStringTransform 'coffeelint',
   transformOptions,
   (content, config, done) ->
-    errorReport = coffeelint.getErrorReport()
-    fileOptions = coffeelint.configfinder.getConfig() or {}
+    try
+      errorReport = coffeelint.getErrorReport()
+      fileOptions = coffeelint.configfinder.getConfig() or {}
 
-    options = _.defaults config.opts, fileOptions
+      options = _.defaults config.opts, fileOptions
 
-    errors = errorReport.lint config.file, content, options
-    if errors.length isnt 0
-      coffeelint.reporter config.file, errors
+      errors = errorReport.lint config.file, content, options
+      if errors.length isnt 0
+        coffeelint.reporter config.file, errors
 
-      if options.doEmitErrors and errorReport.hasError()
-        done new Error ("coffeelint has errors")
+        if options.doEmitErrors and errorReport.hasError()
+          throw new Error ("coffeelint has errors")
 
-      if options.doEmitWarnings and _.any(errorReport.paths, (p) -> errorReport.pathHasWarning(p))
-        done new Error ("coffeelint has warnings")
+        if options.doEmitWarnings and
+           _.some(errorReport.paths, (o, p) ->
+             errorReport.pathHasWarning(p))
+          throw new Error ("coffeelint has warnings")
 
-    done null, content
+      done null, content
+
+    catch error
+      done error
+

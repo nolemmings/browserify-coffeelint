@@ -16,21 +16,26 @@ transformOptions = {
 };
 
 module.exports = transformTools.makeStringTransform('coffeelint', transformOptions, function(content, config, done) {
-  var errorReport, errors, fileOptions, options;
-  errorReport = coffeelint.getErrorReport();
-  fileOptions = coffeelint.configfinder.getConfig() || {};
-  options = _.defaults(config.opts, fileOptions);
-  errors = errorReport.lint(config.file, content, options);
-  if (errors.length !== 0) {
-    coffeelint.reporter(config.file, errors);
-    if (options.doEmitErrors && errorReport.hasError()) {
-      done(new Error("coffeelint has errors"));
+  var error, error1, errorReport, errors, fileOptions, options;
+  try {
+    errorReport = coffeelint.getErrorReport();
+    fileOptions = coffeelint.configfinder.getConfig() || {};
+    options = _.defaults(config.opts, fileOptions);
+    errors = errorReport.lint(config.file, content, options);
+    if (errors.length !== 0) {
+      coffeelint.reporter(config.file, errors);
+      if (options.doEmitErrors && errorReport.hasError()) {
+        throw new Error("coffeelint has errors");
+      }
+      if (options.doEmitWarnings && _.some(errorReport.paths, function(o, p) {
+        return errorReport.pathHasWarning(p);
+      })) {
+        throw new Error("coffeelint has warnings");
+      }
     }
-    if (options.doEmitWarnings && _.any(errorReport.paths, function(p) {
-      return errorReport.pathHasWarning(p);
-    })) {
-      done(new Error("coffeelint has warnings"));
-    }
+    return done(null, content);
+  } catch (error1) {
+    error = error1;
+    return done(error);
   }
-  return done(null, content);
 });
