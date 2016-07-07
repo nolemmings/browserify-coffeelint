@@ -1,28 +1,28 @@
 _                       = require 'lodash'
-through                 = require 'through2'
 coffeelint              = require 'coffeelint'
 coffeelint.reporter     = require('coffeelint-stylish').reporter
 coffeelint.configfinder = require('coffeelint/lib/configfinder')
+transformTools          = require 'browserify-transform-tools'
 
-module.exports = (file, overrideOptions = {}) ->
-  errorReport = coffeelint.getErrorReport()
-  fileOptions = coffeelint.configfinder.getConfig() or {}
+transformOptions =
+  includeExtensions: ['.coffee']
 
-  options = _.defaults overrideOptions, fileOptions
+module.exports = transformTools.makeStringTransform 'coffeelint',
+  transformOptions,
+  (content, config, done) ->
+    errorReport = coffeelint.getErrorReport()
+    fileOptions = coffeelint.configfinder.getConfig() or {}
 
-  through (buf, enc, next) ->
-    # Lint!
-    if file.substr(-7) is '.coffee'
-      errors = errorReport.lint file, buf.toString(), options
-      if errors.length isnt 0
-        coffeelint.reporter file, errors
+    options = _.defaults config.opts, fileOptions
 
-        if options.doEmitErrors and errorReport.hasError()
-          next new Error ("coffeelint has errors")
+    errors = errorReport.lint config.file, content, options
+    if errors.length isnt 0
+      coffeelint.reporter config.file, errors
 
-        if options.doEmitWarnings and _.any(errorReport.paths, (o, p) -> errorReport.pathHasWarning(p))
-          next new Error ("coffeelint has warnings")
+      if options.doEmitErrors and errorReport.hasError()
+        done new Error ("coffeelint has errors")
 
-    # Just pass it through
-    @push buf
-    next()
+      if options.doEmitWarnings and _.any(errorReport.paths, (p) -> errorReport.pathHasWarning(p))
+        done new Error ("coffeelint has warnings")
+
+    done null, content
